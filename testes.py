@@ -9,20 +9,24 @@ import Adafruit_GPIO.SPI as SPI
 import Adafruit_MCP3008
 import Adafruit_DHT
 
+#Aqui começa a config do Relê
 # setting a current mode
 GPIO.setmode(GPIO.BCM)
 #removing the warings
 GPIO.setwarnings(False)
-#creating a list (array) with the number of GPIO's that we use
+#creating a list (array) with the number of GPIO's that we use 13 e 19 são as duas lampadas e 26 a bomba d'agua
 pins = [13,19,26]
-#setting the mode for all pins so all will be switched on
-GPIO.setup(pins, GPIO.OUT)
+#setting the mode as Output, and initial state as Low or False
+GPIO.setup(pins, GPIO.OUT, initial=GPIO.LOW)
+#Aqui termina a config do Relê
 
+#Aqui começa a config do DHT11
 # Type of sensor, can be Adafruit_DHT.DHT11, Adafruit_DHT.DHT22, or Adafruit_DHT.AM2302.
 DHT_TYPE = Adafruit_DHT.DHT11
 # Example of sensor connected to Raspberry Pi pin 23
 DHT_PIN  = 4
 
+#Aqui começa a config do MCP3008
 # Hardware SPI configuration:
 SPI_PORT   = 0
 SPI_DEVICE = 0
@@ -40,7 +44,7 @@ for pin in pins:
         GPIO.output(pin,  GPIO.LOW)
         #wait 0,5 second
         time.sleep(0.5)
-
+#limpa todos os sinais dos pinos
 GPIO.cleanup()
 print "Shutdown All relays"
 
