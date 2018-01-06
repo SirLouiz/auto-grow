@@ -1,21 +1,49 @@
+  GNU nano 2.7.4                                                                                 Arquivo: teste.py                                                                                              
+
 import time
-# Import SPI library (for hardware SPI), MCP3008 library and DHT library.
+from time import gmtime, strftime
+import RPi.GPIO as GPIO
+
+# Import SPI library (for hardware SPI) and MCP3008 library.
 import Adafruit_GPIO.SPI as SPI
 import Adafruit_MCP3008
 import Adafruit_DHT
 
+# setting a current mode
+GPIO.setmode(GPIO.BCM)
+#removing the warings
+GPIO.setwarnings(False)
+#creating a list (array) with the number of GPIO's that we use
+pins = [13,19,26]
+#setting the mode for all pins so all will be switched on
+GPIO.setup(pins, GPIO.OUT)
+
 # Type of sensor, can be Adafruit_DHT.DHT11, Adafruit_DHT.DHT22, or Adafruit_DHT.AM2302.
 DHT_TYPE = Adafruit_DHT.DHT11
-# Pin in the RaspberryPi you want to connect the sensor to.
+# Example of sensor connected to Raspberry Pi pin 23
 DHT_PIN  = 4
 
-# Hardware SPI configuration for MCP comunication:
+# Hardware SPI configuration:
 SPI_PORT   = 0
 SPI_DEVICE = 0
 mcp = Adafruit_MCP3008.MCP3008(spi=SPI.SpiDev(SPI_PORT, SPI_DEVICE))
 
+f = open('out.txt', 'a')
 print('Press Ctrl-C to quit...')
-# Never ending loop
+
+for pin in pins:
+        #setting the GPIO to HIGH or 1 or true
+        GPIO.output(pin,  GPIO.HIGH)
+        #wait 0,5 second
+        time.sleep(0.5)
+        #setting the GPIO to LOW or 0 or false
+        GPIO.output(pin,  GPIO.LOW)
+        #wait 0,5 second
+        time.sleep(0.5)
+
+GPIO.cleanup()
+print "Shutdown All relays"
+
 while True:
 	# Reads the DHT Sensor
 	humidity, temp = Adafruit_DHT.read(DHT_TYPE, DHT_PIN)
