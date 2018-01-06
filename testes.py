@@ -16,8 +16,8 @@ GPIO.setmode(GPIO.BCM)
 GPIO.setwarnings(False)
 #creating a list (array) with the number of GPIO's that we use 13 e 19 são as duas lampadas e 26 a bomba d'agua
 pins = [13,19,26]
-#setting the mode as Output, and initial state as Low or False
-GPIO.setup(pins, GPIO.OUT, initial=GPIO.LOW)
+#setting the mode as Output, and initial state as HIGH bcuz lamps turn OFF with HIGH and turn ON with LOW
+GPIO.setup(pins, GPIO.OUT, initial=GPIO.HIGH)
 #Aqui termina a config do Relê
 
 #Aqui começa a config do DHT11
