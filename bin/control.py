@@ -28,7 +28,7 @@ while True:
 	print("Waiting Command")
 	data = get_data("control/light")
 	print data
-        if data=="1":
+	if data=="1":
                 if GPIO.input(13)==1:
                         GPIO.output(13,  GPIO.LOW)
                 elif GPIO.input(13)==0:
@@ -45,7 +45,8 @@ while True:
                         GPIO.output(26,  GPIO.HIGH)
 	elif data=="4":
 		print("Goodbye")
-		break
+		GPIO.output(pins, GPIO.HIGH)
+		continue
 GPIO.cleanup()
 print "Shutdown All relays"
 
