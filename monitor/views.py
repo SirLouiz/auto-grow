@@ -3,7 +3,7 @@ import paho.mqtt.subscribe as subscribe
 
 
 def get_data(topic):
-    data = subscribe.simple(topic, hostname="201.21.190.179", port=42400, retained=False, msg_count=10)
+    data = subscribe.simple(topic, hostname="201.21.190.179", retained=False, msg_count=10)
     res = ""
     for h in data:
         res = res + str(h.payload) + "\n"
