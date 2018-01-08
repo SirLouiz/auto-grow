@@ -19,17 +19,17 @@ DHT_PIN  = 4
 SPI_PORT   = 0
 SPI_DEVICE = 0
 mcp = Adafruit_MCP3008.MCP3008(spi=SPI.SpiDev(SPI_PORT, SPI_DEVICE))
-
+print("oi")
 while True:
 	humi, temp = Adafruit_DHT.read(DHT_TYPE, DHT_PIN)
 	if humi is None or temp is None:
-	       	time.sleep(1)
+	       	time.sleep(0.2)
 	       	continue
 	tempo = strftime(" %H:%M:%S ")
 	value1 = mcp.read_adc(0)
 	value2 = mcp.read_adc(7)
-	print('Luz: {0}'.format(str(value2)+tempo))
+	#print('Luz: {0}'.format(str(value2)+tempo))
 	publish.single("monitor/light",tempo+str(value2))
 	publish.single("monitor/air",humi)
-	publish.single("monitor/dirty",value1)
+	publish.single("monitor/dirt",value1)
 	publish.single("monitor/temp",temp)
