@@ -29,7 +29,7 @@ while True:
 	value1 = mcp.read_adc(0)
 	value2 = mcp.read_adc(7)
 	#print('Luz: {0}'.format(str(value2)+tempo))
-	publish.single("monitor/light",tempo+str(value2))
+	publish.single("monitor/light",value2)
 	publish.single("monitor/air",humi)
 	publish.single("monitor/dirt",value1)
 	publish.single("monitor/temp",temp)

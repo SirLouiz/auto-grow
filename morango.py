@@ -30,7 +30,7 @@ DHT_PIN  = 4
 SPI_PORT   = 0
 SPI_DEVICE = 0
 mcp = Adafruit_MCP3008.MCP3008(spi=SPI.SpiDev(SPI_PORT, SPI_DEVICE))
-print("Preparacao Concluida")
+#print("Preparacao Concluida")
 while True:
         soil = mcp.read_adc(0)
         if soil >= "1000": #if soil is dry
@@ -46,4 +46,4 @@ while True:
 	elif tempo[0] =="06": #if it is 06oclock and the lights are off
 		if GPIO.input(lights)==1:
 			GPIO.output(lights,  GPIO.LOW) #turn on
-	time.sleep(2000) #wait 30min and read again
+	#time.sleep(2000) #wait 30min and read again
