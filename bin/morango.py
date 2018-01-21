@@ -34,15 +34,16 @@ mcp = Adafruit_MCP3008.MCP3008(spi=SPI.SpiDev(SPI_PORT, SPI_DEVICE))
 #print("Preparacao Concluida")
 while True:
         soil = mcp.read_adc(0)
-	if soil >= 800: #if soil is dry
+	if soil >= 650: #if soil is dry
                 GPIO.output(pump,  GPIO.LOW) #turn on pump
                 continue
         elif soil <= 500: #if soil is wet
                 GPIO.output(pump,  GPIO.HIGH) #turn off pump
 	tempo = strftime("%H:%M:%S")
-        #if tempo == "15:57:40":
-	#	print ("Rebooting")
-	#	os.system('systemctl reboot')
+        if tempo == "23:59:00":
+		print ("Rebooting")
+		os.system('systemctl reboot')
+		time.sleep(5)
         tempo = tempo.split(":")
 	if tempo[0] =="18" and GPIO.input(13)==0: #if its 18h and lights on
 			GPIO.output(lights,  GPIO.HIGH) #turn off
