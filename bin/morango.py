@@ -40,7 +40,7 @@ while True:
 		time.sleep(5)
         elif tempo == "06:30:00": #waters once a day for 3s
                 GPIO.output(pump, GPIO.LOW) #turn on pump
-                time.sleep(5) #waits 3s
+                time.sleep(3) #waits 3s
 		GPIO.output(pump, GPIO.HIGH) #turn off pump
 		#time.sleep()
         tempo = tempo.split(":")
