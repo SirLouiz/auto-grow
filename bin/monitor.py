@@ -33,3 +33,5 @@ while True:
 	publish.single("monitor/air",humi)
 	publish.single("monitor/dirt",value1)
 	publish.single("monitor/temp",temp)
+	publish.single("monitor/time",tempo)
+

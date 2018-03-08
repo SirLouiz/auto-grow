@@ -97,8 +97,8 @@ print('Press Ctrl-C to quit.')
 worksheet = None
 while True:
     # Login if necessary.
-    if worksheet is None:
-        worksheet = login_open_sheet(GDOCS_OAUTH_JSON, GDOCS_SPREADSHEET_NAME)
+    #if worksheet is None:
+    #    worksheet = login_open_sheet(GDOCS_OAUTH_JSON, GDOCS_SPREADSHEET_NAME)
 
     # Attempt to get sensor reading.
     humidity, temp = Adafruit_DHT.read(DHT_TYPE, DHT_PIN)
@@ -110,19 +110,19 @@ while True:
         time.sleep(2)
         continue
 
-    #print('Temperature: {0:0.1f} C'.format(temp))
-    #print('Humidity:    {0:0.1f} %'.format(humidity))
+    print('Temperature: {0:0.1f} C'.format(temp))
+    print('Humidity:    {0:0.1f} %'.format(humidity))
 
     # Append the data in the spreadsheet, including a timestamp
-    try:
-        worksheet.append_row((datetime.datetime.now(), temp, humidity))
-    except:
-        # Error appending data, most likely because credentials are stale.
-        # Null out the worksheet so a login is performed at the top of the loop.
-        print('Append error, logging in again')
-        worksheet = None
-        time.sleep(FREQUENCY_SECONDS)
-        continue
+    #try:
+    #    worksheet.append_row((datetime.datetime.now(), temp, humidity))
+    #except:
+    #    # Error appending data, most likely because credentials are stale.
+    #    # Null out the worksheet so a login is performed at the top of the loop.
+    #    print('Append error, logging in again')
+    #    worksheet = None
+    #    time.sleep(FREQUENCY_SECONDS)
+    #    continue
 
     # Wait 30 seconds before continuing
     #print('Wrote a row to {0}'.format(GDOCS_SPREADSHEET_NAME))
