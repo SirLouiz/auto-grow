@@ -4,11 +4,16 @@ import Adafruit_GPIO.SPI as SPI
 import Adafruit_MCP3008
 import Adafruit_DHT
 
-import paho.mqtt.publish as publish
+import paho.mqtt.client as mqtt
 
-def on_publish(mqttc, obj, mid):
+mqttc = mqtt.Client(client_id="monitor", transport="websockets")
+mqttc.connect("localhost", 1883, 60)
+
+def on_publish(client, data, mid):
     print("mid: " + str(mid))
 pass
+
+mqttc.on_publish = on_publish
 
 # Type of sensor, can be Adafruit_DHT.DHT11, Adafruit_DHT.DHT22, or Adafruit_DHT.AM2302.
 DHT_TYPE = Adafruit_DHT.DHT11
@@ -19,7 +24,7 @@ DHT_PIN  = 4
 SPI_PORT   = 0
 SPI_DEVICE = 0
 mcp = Adafruit_MCP3008.MCP3008(spi=SPI.SpiDev(SPI_PORT, SPI_DEVICE))
-print("oi")
+print("Iniciando monitor...")
 while True:
 	humi, temp = Adafruit_DHT.read(DHT_TYPE, DHT_PIN)
 	if humi is None or temp is None:
@@ -29,9 +34,8 @@ while True:
 	value1 = mcp.read_adc(0)
 	value2 = mcp.read_adc(7)
 	#print('Luz: {0}'.format(str(value2)+tempo))
-	publish.single("monitor/light",value2)
-	publish.single("monitor/air",humi)
-	publish.single("monitor/dirt",value1)
-	publish.single("monitor/temp",temp)
-	publish.single("monitor/time",tempo)
-
+	mqttc.publish("monitor/light",value2)
+	mqttc.publish("monitor/air", payload=humi)
+	mqttc.publish("monitor/dirt",value1)
+	mqttc.publish("monitor/temp",temp)
+	mqttc.publish("monitor/time",tempo)
